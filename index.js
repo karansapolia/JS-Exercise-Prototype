@@ -122,10 +122,21 @@ Baby.prototype.play = function() {
   TASK 4
 
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+
+  1. Global Binding - When you simply call 'this' in the global scope, it points to
+  the global object, which in borwsers in 'Window'.
+
+  2. Implicit Binding - When use the dot notataion for calling a method of an object,
+  the this of the method/function points to the object placed before the '.' . Fir example,
+  in a.hello(), the 'this' of hello() points to the object 'a'.
+
+  3. New Binding - Whenever a constructor function is used, using the 'new' syntax, 'this'
+  refers to the specific instance of the object that is created and returned by the constructor
+  function.
+  
+  4. Explicit Binding - Whenever you use functions like .call(), .apply(), .bind(), you overwrite
+  the 'this' reference of the functions these methods are applied to and a new 'this' reference
+  is specifically applied to them. This reference is the valu inside the parentheses.
 */
 
 
