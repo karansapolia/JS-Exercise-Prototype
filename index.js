@@ -39,8 +39,24 @@ Airplane.prototype.land = function () {
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
 
-function Person() {
+function Person(name, age) {
+  this.age = age;
+  this.name = name;
+  this.stomach = [];
+}
 
+Person.prototype.eat = function(someFood) {
+  if (this.stomach.length < 10) {
+    this.stomach.push(someFood);
+  }
+}
+
+Person.prototype.poop = function() {
+  this.stomach = [];
+}
+
+Person.prototype.toString = function() {
+  return `${this.name}, ${this.age}`;
 }
 
 /*
@@ -57,8 +73,31 @@ function Person() {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
+function Car(model, milesPerGallon) {
+  this.model = model;
+  this.milesPerGallon = milesPerGallon;
+  this.tank = 0;
+  this.odometer = 0;
+}
 
+Car.prototype.fill = function(gallons) {
+  this.tank += gallons;
+}
+
+Car.prototype.drive = function(inputDistance) {
+  if (this.tank) {
+    let driveableDistance = this.tank * this.milesPerGallon;
+    if (driveableDistance < inputDistance) {
+      this.odometer += driveableDistance;
+      this.tank = 0;
+      return `I ran out of fuel at ${this.odometer} miles!`;
+    } else {
+      this.odometer += inputDistance;
+      this.tank -= inputDistance / this.milesPerGallon;
+    }
+  } else {
+    return `I ran out of fuel at ${this.odometer} miles!`;
+  }
 }
 
 /*
@@ -68,18 +107,36 @@ function Car() {
     - Besides the methods on Person.prototype, babies have the ability to `.play()`:
         + Should return a string "Playing with x", x being the favorite toy.
 */
-function Baby() {
+function Baby(name, age, favoriteToy) {
+  Person.call(this, name, age);
+  this.favoriteToy = favoriteToy;
+}
 
+Baby.prototype = Object.create(Person.prototype);
+
+Baby.prototype.play = function() {
+  return `Playing with ${this.favoriteToy}`;
 }
 
 /* 
   TASK 4
 
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+
+  1. Global Binding - When you simply call 'this' in the global scope, it points to
+  the global object, which in borwsers in 'Window'.
+
+  2. Implicit Binding - When use the dot notataion for calling a method of an object,
+  the this of the method/function points to the object placed before the '.' . Fir example,
+  in a.hello(), the 'this' of hello() points to the object 'a'.
+
+  3. New Binding - Whenever a constructor function is used, using the 'new' syntax, 'this'
+  refers to the specific instance of the object that is created and returned by the constructor
+  function.
+  
+  4. Explicit Binding - Whenever you use functions like .call(), .apply(), .bind(), you overwrite
+  the 'this' reference of the functions these methods are applied to and a new 'this' reference
+  is specifically applied to them. This reference is the valu inside the parentheses.
 */
 
 
